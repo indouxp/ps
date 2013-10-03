@@ -10,6 +10,23 @@ Param(
 [string]$MyPath = $MyInvocation.MyCommand.Path
 [string]$MyName = $MyInvocation.MyCommand.Name
 ###############################################################################
+function main {
+  try {
+    toLog("START")
+    # 処理
+    Start-Sleep 5
+    "job" | Out-File $script:$logPath -encoding Default -append
+    toLog("SUCCESS")
+  } catch [Exception] {
+    # エラー処理
+    toLog("ERROR:" + $Error )
+    exit 1
+  } finally {
+    toLog("DONE")
+  }
+  exit 0
+}
+###############################################################################
 function toLog {
   Param([string]$msg = "")
   $now = get-date -uFormat "%Y/%m/%d %H:%M:%S"
@@ -17,17 +34,4 @@ function toLog {
     Out-File $script:$logPath -encoding Default -append
 }
 ###############################################################################
-try {
-  toLog("START")
-  # 処理
-  Start-Sleep 5
-  "job" | Out-File "c:\notexist\test.txt"
-  toLog("SUCCESS")
-} catch [Exception] {
-  # エラー処理
-  toLog("ERROR:" + $Error )
-  exit 1
-} finally {
-  toLog("DONE")
-}
-exit 0
+main
