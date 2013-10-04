@@ -15,7 +15,7 @@ function main {
     toLog("START")
     # èàóù
     Start-Sleep 5
-    "job" | Out-File $script:$logPath -encoding Default -append
+    "íºê⁄èoóÕ" | Out-File $script:$logPath -encoding Default -append
     toLog("SUCCESS")
   } catch [Exception] {
     # ÉGÉâÅ[èàóù
@@ -29,9 +29,10 @@ function main {
 ###############################################################################
 function toLog {
   Param([string]$msg = "")
-  $now = get-date -uFormat "%Y/%m/%d %H:%M:%S"
+  $now = get-date -uFormat "%Y/%m/%dT%H:%M:%S"
   $now + ":" + "[" + $PID + "]" + " " + $msg |
     Out-File $script:$logPath -encoding Default -append
 }
 ###############################################################################
+Set-PSDebug -strict
 main
