@@ -15,8 +15,10 @@ function main {
   try {
     toLog("START")
     # èàóù
-    if (Test-Path $txtPath) {
+    if ($txtPath -ne "" -and Test-Path $txtPath) {
       toLog($txtPath)
+    } else {
+      throw $txtPath
     }
     toLog("SUCCESS")
   } catch [Exception] {
