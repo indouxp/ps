@@ -5,6 +5,7 @@
 ###############################################################################
 Param(
   [string]$txtPath,
+  [string]$bookPath,
   [string]$logPath = $MyInvocation.MyCommand.Path + ".log"
 )
 ###############################################################################
@@ -13,34 +14,40 @@ Param(
 [int32]$rc = 0
 ###############################################################################
 function main {
-  #try {
+  try {
     toLog("START")
     # 処理
     chkTxtPath($txtPath)
+    chkBookPath($bookPath)
     $recs = Get-Content -Path $txtPath
     $excel = New-Object -ComObject Excel.Application  # comオブジェクトの作成
-    txtToExcel -ref_excel ([ref]$excel) -ref_recs ([ref]$recs)
+    $workbook = $excel.Workbooks.add(1)               # シート追加
+    txtToWorkbook -ref_workbook ([ref]$workbook) -ref_recs ([ref]$recs)
+    $excel.DisplayAlerts = $false
+    $workbook.SaveAs($bookPath)
     toLog("SUCCESS")
-  #} catch [Exception] {
-  #  # エラー処理
-  #  toLog("ERROR:" + $_.Exception.Message)
-  #  toLog("ERROR:" + $_.Exception.Source)
-  #  toLog("ERROR:" + $_.Exception.StackTrace)
-  #  $_.Exception | get-member
-  #  exit $rc
-  #} finally {
+  } catch [Exception] {
+    # エラー処理
+    toLog("ERROR:" + $_.Exception.Message)
+    exit $rc
+  } finally {
     $excel.quit() 
     toLog("DONE")
-  #}
+  }
   exit $rc
 }
 ###############################################################################
-function txtToExcel {
+function txtToWorkbook {
   Param(
-    [ref]$ref_excel,
+    [ref]$ref_workbook,
     [ref]$ref_recs
   )
-  $workbook = $ref_excel.Value.Workbooks.add(1)     # シート追加
+  $lineStyle    = "microsoft.office.interop.excel.xlLineStyle" -as [type]
+  $colorIndex   = "microsoft.office.interop.excel.xlColorIndex" -as [type]
+  $borderWeight = "microsoft.office.interop.excel.xlBorderWeight" -as [type]
+  $chartType    = "microsoft.office.interop.excel.xlChartType" -as [type]
+
+  $workbook = $ref_workbook.Value
   $sheet = $workbook.WorkSheets.Item(1)
   $sheet.Name = $MyName                             # シート名
   $excel.visible = $false
@@ -50,8 +57,16 @@ function txtToExcel {
     $fields = $recs[$row] -split " +"               # / +/でsplit
     for ($col = 0; $col -lt $fields.Length; $col++) {
       $sheet.Cells.Item($row+1, $col+1) = $fields[$col]
+      if ($row -eq 0) {
+        $sheet.cells.item($row+1,$col+1).font.bold = $true
+        $sheet.cells.item($row+1,$col+1).borders.LineStyle = $lineStyle::xlDashDot
+        $sheet.cells.item($row+1,$col+1).borders.ColorIndex = $colorIndex::xlColorIndexAutomatic
+        $sheet.cells.item($row+1,$col+1).borders.weight = $borderWeight::xlMedium
+      }
     }    
   }
+  $range = $ref_sheet.Value.usedRange
+  $range.EntireColumn.AutoFit() | out-null
 }
 ###############################################################################
 function chkTxtPath {
@@ -63,6 +78,16 @@ function chkTxtPath {
       $rc = 1
       throw "$txtPath not exist"
     }
+  } else {
+    $rc = 1
+    throw "txtPath not set"
+  }
+}
+###############################################################################
+function chkBookPath {
+  Param([string]$bookPath)
+  if ($bookPath -ne "") {
+    toLog($bookPath)
   } else {
     $rc = 1
     throw "txtPath not set"
