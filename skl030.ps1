@@ -62,7 +62,7 @@ function txtToWorkbook {
   $recs = $ref_recs.Value
   for ($row = 0; $row -lt $recs.Length; $row++) {
     Write-Host $row $recs[$row]
-    $fields = $recs[$row] -split " +"               # / +/‚Åsplit
+    $fields = $recs[$row] -split "\t"
     for ($col = 0; $col -lt $fields.Length; $col++) {
       $sheet.Cells.Item($row+1, $col+1) = $fields[$col]
       if ($row -eq 0) {
