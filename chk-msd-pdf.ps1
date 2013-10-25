@@ -8,41 +8,64 @@ Param(
 )
 ###############################################################################
 function main{
+###############################################################################
   $srcs = @()
   $dests = @()
-  get-list -dirname "C:\Users\indou\Pictures\Release" -ref_lists ([ref]$srcs)
-  get-list -dirname "G:\pdf" -ref_lists ([ref]$dests)
+  get-list -dirname "C:\Users\indou\Pictures\Release" -ref_length_list ([ref]$srcs)
+  get-list -dirname "G:\pdf" -ref_length_list ([ref]$dests)
 
-  $src_lists = @{}
-  foreach ($list in $srcs) {
-    $src_lists[$list.Name] = $list.Length
+  ########################################  
+  # ファイル名とサイズを取得
+  ########################################  
+  $src_length_list = @{}
+  foreach ($file_object in $srcs) {
+    $src_length_list[$file_object.Name] = $file_object.Length
   }
-  $dest_lists = @{}
-  foreach ($list in $dests) {
-    $dest_lists[$list.Name] = $list.Length
+  $dest_length_list = @{}
+  foreach ($file_object in $dests) {
+    $dest_length_list[$file_object.Name] = $file_object.Length
   }
-  $src_lists.getEnumerator() | sort key | Foreach {
-    if ($dest_lists[$_.key]) {
-      if ($src_lists[$_.key] -eq $dest_lists[$_.key]) {
-        Write-Host "OK  " $_.key $dest_lists[$_.key]
+  ########################################  
+  # ソースリストをすべて処理
+  ########################################  
+  $src_length_list.getEnumerator() | sort key | Foreach {
+    if ($dest_length_list[$_.key]) {
+      if ($src_length_list[$_.key] -eq $dest_length_list[$_.key]) {
+        $result = "○:" +
+                  $_.key + " " +
+                  $dest_length_list[$_.key]
       } else {
-      Write-Host "SIZE" $_.key $src_lists[$_.key] $dest_lists[$_.key]
+        $result = "△:" +
+                  $_.key + " " +
+                  $src_length_list[$_.key] + " " +
+                  $dest_length_list[$_.key]
       }
     } else {
-      Write-Host "NG  " $_.key
+      $result = "×:" +
+                $_.key
     }
+    $result
   }
+  $msg = @"
+---------------------------------------
+○:いずれにも存在し、サイズも一致
+△:いずれにも存在するが、サイズが不一致
+×:Micro SDには存在しない。
+"@
+  $msg
 }
 ###############################################################################
 function get-list {
+###############################################################################
   Param(
-    $dirname,
-    [ref]$ref_lists
+    [string]$dirname,
+    [ref]$ref_length_list
   )
   $hash = get-childitem $dirname
-  $ref_lists.Value = get-childitem $dirname
+  $ref_length_list.Value = get-childitem $dirname
 }
 
 ###############################################################################
 Set-PSDebug -strict
 main
+exit 0
