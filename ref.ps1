@@ -1,3 +1,6 @@
+###############################################################################
+# 関数への参照渡しでの呼び出しサンプル
+###############################################################################
 function main {
   $names = @()
   $files = get-childitem
@@ -13,14 +16,15 @@ function main {
 }
 
 function func {
-Param (
-  [ref]$ref_files,
-  [ref]$ref_names
-)
+  Param (
+    [ref]$ref_files,
+    [ref]$ref_names
+  )
   foreach ($value in $ref_files.Value) {
+    # $namesの配列への参照にファイル名のみを入れる
     $ref_names.Value += $value.Name
   }
 }
 
-Set-PSDebug -strict
+Set-PSDebug -strict # 値が設定される前に変数が参照された場合に、インタープリターが例外をスローするように指定します。
 main
