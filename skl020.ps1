@@ -17,7 +17,7 @@ function main {
     $workbook = $excel.Workbooks.add(1)               # シート追加
     $sheet = $workbook.WorkSheets.Item(1)
     $sheet.Name = $MyName                             # シート名
-    $excel.visible = $true
+    $excel.visible = $false
     report([ref]$sheet)
     Start-Sleep 5
     $excel.DisplayAlerts = $false

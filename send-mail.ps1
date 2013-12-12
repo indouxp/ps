@@ -1,7 +1,7 @@
 
-$EmailFrom = “indou.tsystem@gmail.com” 
-$EmailTo =”1064bw29@mcea.jp” 
-$Subject = "タイトル" 
+$EmailFrom = "indou.tsystem@gmail.com"
+$EmailTo = "1064bw29@mcea.jp"
+$Subject = "タイトル"
 $Body = "本文"  
 $SMTPServer = "smtp.gmail.com" 
 $SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587) 
