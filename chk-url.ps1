@@ -1,5 +1,13 @@
+#
+# httpで生死監視
+#
+# 認証がある場合は、うまくいかない。
+# PS C:\Users\indou\Documents\GitHub\ps> .\chk-url.ps1
+# リモート サーバーがエラーを返しました: (401) 許可されていません
+# PS C:\Users\indou\Documents\GitHub\ps> 
 
 $url = "http://192.168.0.244/"
+$url = "http://192.168.0.1/"
 $response = $Null
 try {
   [System.Net.HttpWebRequest]$request = [System.Net.WebRequest]::Create($url)
