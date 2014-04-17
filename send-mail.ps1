@@ -1,4 +1,6 @@
-
+#
+# gmail‚©‚çmail
+#
 $EmailFrom = "indou.tsystem@gmail.com"
 $EmailTo = "1064bw29@mcea.jp"
 $Subject = "ƒ^ƒCƒgƒ‹"
