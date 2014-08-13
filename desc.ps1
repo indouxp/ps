@@ -1,29 +1,36 @@
+Param(
+	[string] $table = "tbl_messages"
+)
 
 $server_name = ".\sqlexpress"
 $database = "tsystem"
 #$query = "exec sp_columns tbl_messages"
-$table = "TBL_MESSAGES"
+#$table = "TBL_MESSAGES"
+$log = "d:\tmp\desc.log"
+
+Write-Host "[$table]"
 
 # http://msdn.microsoft.com/ja-jp/library/ms186816.aspx
 $query = @"
-select
-    syscolumns.name,
+	select
+		sysobjects.name,
+		syscolumns.name,
 		systypes.name,
 		syscolumns.length 
-from
-    syscolumns
-inner join 
+	from
+		syscolumns
+	inner join 
 		sysobjects
-on
-    sysobjects.id = syscolumns.id
-inner join
+	on
+		sysobjects.id = syscolumns.id
+	inner join
 		systypes
-on
+	on
 		syscolumns.xtype = systypes.xtype
-where
-    sysobjects.name = '$table'
-order by
-    syscolumns.colid
+	where
+		sysobjects.name = '$table'
+	order by
+		syscolumns.colid
 "@
 
 # -E セキュリティ接続
@@ -34,5 +41,6 @@ order by
 # -b エラー時にバッチを中止
 # -w 表示幅
 # -W 後続のスペースを削除
-sqlcmd -E -S $server_name -d $database -Q $query -u -b -w 80 -W
+sqlcmd -E -S $server_name -d $database -Q $query -u -b -w 80 -W > $log
 exit $LASTEXITCODE
+
