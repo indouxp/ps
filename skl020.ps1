@@ -10,6 +10,13 @@ Param(
 [string]$MyPath = $MyInvocation.MyCommand.Path
 [string]$MyName = $MyInvocation.MyCommand.Name
 ###############################################################################
+$ErrorActionPreference = "Stop"
+trap {
+  $msg = "trap:" + $Error[0]
+  $msg
+	break
+}
+###############################################################################
 function main {
   try {
     $rc = 0
@@ -24,8 +31,9 @@ function main {
     $workbook.SaveAs($bookPath)
   } catch [Exception] {
     # ÉGÉâÅ[èàóù
-    $Error
-    $rc = 1
+    $msg = "catch:" + $Error[0]
+		$msg
+    exit 1
   } finally {
     $excel.DisplayAlerts = $false
     $excel.quit() 
