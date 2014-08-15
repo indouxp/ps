@@ -1,4 +1,7 @@
-
+###############################################################################
+#
+#
+###############################################################################
 Param(
   [string]$filePath
 )
@@ -7,7 +10,6 @@ function Main {
   Param(
     [string]$filePath
   )
-  $MyInvocation.MyCommand | get-member
   if ($filePath -ne "") {
     if ($filePath -match "^\.") {
       Write-Host "‘Š‘ÎƒpƒX"
