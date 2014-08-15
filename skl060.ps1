@@ -1,8 +1,10 @@
 ###############################################################################
-# 時間特定
 #
 #
 ###############################################################################
+#
+[string]$logPath = $MyInvocation.MyCommand.Path + ".log"
+
 function ExecCmd([string]$strCmd)
 {
   $Process = [System.Diagnostics.Process];
@@ -27,22 +29,23 @@ function ExecCmd([string]$strCmd)
 }
 ###############################################################################
 function main([string]$cmd) {
-  #try {
+$logPath
+  try {
     "START"
     $watch = New-Object System.Diagnostics.StopWatch
     $watch.Start()
     $output = ExecCmd($cmd)
     $watch.Stop()
     $t = $watch.Elapsed
-  #} catch [Exception] {
-  #  # エラー処理
-  #  $Error
-  #  exit 1
-  #} finally {
-    $output
+  } catch [Exception] {
+    # エラー処理
+    $Error[0]
+    exit 1
+  } finally {
+    $output | Out-File $logPath -encoding Default -append
     [String]$t.Minutes + "分" + [String]$t.Seconds + "秒" + [String]$t.Milliseconds
     "DONE"
-  #}
+  }
   exit 0
 }
 ###############################################################################
