@@ -10,19 +10,24 @@ Param(
 [string]$MyPath = $MyInvocation.MyCommand.Path
 [string]$MyName = $MyInvocation.MyCommand.Name
 ###############################################################################
+$ErrorActionPreference = "Stop"
+trap {
+	$Error
+}
+###############################################################################
 function main {
   try {
-    toLog("START")
+    toLog "START"
     # èàóù
-    Start-Sleep 5
+    Start-Sleep 1
     "íºê⁄èoóÕ" | Out-File $script:$logPath -encoding Default -append
-    toLog("SUCCESS")
+    toLog "SUCCESS"
   } catch [Exception] {
     # ÉGÉâÅ[èàóù
-    toLog("ERROR:" + $Error )
+    toLog "ERROR:" + $Error
     exit 1
   } finally {
-    toLog("DONE")
+    toLog "DONE"
   }
   exit 0
 }
@@ -31,7 +36,7 @@ function toLog {
   Param([string]$msg = "")
   $now = get-date -uFormat "%Y/%m/%dT%H:%M:%S"
   $now + ":" + "[" + $PID + "]" + " " + $msg |
-    Out-File $script:$logPath -encoding Default -append
+    Out-File $script:$logPath -encoding Default -append -ErrorAction Stop
 }
 ###############################################################################
 Set-PSDebug -strict
