@@ -18,15 +18,15 @@ $query = @"
 		systypes.name,
 		syscolumns.length 
 	from
-		syscolumns
-	inner join 
-		sysobjects
-	on
-		sysobjects.id = syscolumns.id
-	inner join
-		systypes
-	on
-		syscolumns.xtype = systypes.xtype
+		syscolumns 
+			inner join
+				sysobjects
+			on
+				sysobjects.id = syscolumns.id
+			inner join
+				systypes
+			on
+				syscolumns.xtype = systypes.xtype
 	where
 		sysobjects.name = '$table'
 	order by
