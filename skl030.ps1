@@ -13,11 +13,19 @@ Param(
 [string]$MyName = $MyInvocation.MyCommand.Name
 [int32]$rc = 0
 ###############################################################################
+$ErrorActionPreference = "Stop"
+trap {
+  $msg = "trap:" + $Error[0]
+	Write-Host $msg
+  toLog $msg
+	break
+}
+###############################################################################
 # main
 ###############################################################################
 function main {
   $excel = ""
-  #try {
+  try {
     toLog("START")
     # èàóù
     chkTxtPath($txtPath)
@@ -31,16 +39,18 @@ function main {
     txtToWorkbook -ref_workbook ([ref]$workbook) -ref_recs ([ref]$recs)
     $workbook.SaveAs($bookPath)
     toLog("SUCCESS")
-  #} catch [Exception] {
+  } catch [Exception] {
     # ÉGÉâÅ[èàóù
-    #toLog("ERROR Message:" + $_.Exception.Message)
-    #exit $rc
-  #} finally {
+    $msg = "catch:" + $Error[0]
+		Write-Host $msg
+    toLog $msg
+    exit 1
+  } finally {
     if ($excel -ne "") {
       $excel.quit() 
     }
     toLog("DONE")
-  #}
+  }
 }
 ###############################################################################
 # workbookçÏê¨
