@@ -12,7 +12,10 @@ Param(
 ###############################################################################
 $ErrorActionPreference = "Stop"
 trap {
-	$Error
+  $msg = "trap:" + $Error[0]
+	Write-Host $msg
+  toLog $msg
+	break
 }
 ###############################################################################
 function main {
@@ -21,10 +24,14 @@ function main {
     # èàóù
     Start-Sleep 1
     "íºê⁄èoóÕ" | Out-File $script:$logPath -encoding Default -append
+		$num = 0
+		10/$num
     toLog "SUCCESS"
   } catch [Exception] {
     # ÉGÉâÅ[èàóù
-    toLog "ERROR:" + $Error
+    $msg = "catch:" + $Error[0]
+		Write-Host $msg
+    toLog $msg
     exit 1
   } finally {
     toLog "DONE"
@@ -34,7 +41,7 @@ function main {
 ###############################################################################
 function toLog {
   Param([string]$msg = "")
-  $now = get-date -uFormat "%Y/%m/%dT%H:%M:%S"
+  $now = get-date -uFormat "%Y/%m/%d %H:%M:%S"
   $now + ":" + "[" + $PID + "]" + " " + $msg |
     Out-File $script:$logPath -encoding Default -append -ErrorAction Stop
 }
