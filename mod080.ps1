@@ -1,6 +1,6 @@
-$server_name = ".\sqlexpress"
-$database = "tsystem"
-$table = "tbl_messages"
+[string]$server_name = ".\sqlexpress"
+[string]$database = "tsystem"
+[string]$table = "tbl_messages"
 
 function insert_message {
 	Param(
