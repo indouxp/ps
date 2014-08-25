@@ -1,9 +1,11 @@
 ###############################################################################
 # メール
+# カレントディレクトリのgmail.txtユーザ名、パスワードを取得し、smtp.gmail.com
+# からメールする。
 #
 # Usage:
-#   PS> sent-mail DEST SUBJECT
-#   PS> sent-mail DEST SUBJECT MAILFILE
+#   PS> sent-mail DEST-ADDRESS SUBJECT
+#   PS> sent-mail DEST-ADDRESS SUBJECT MAILFILE
 # ex)
 #   PS> sent-mail tatsuo-i@mtb.biglobe.ne.jp テストメール
 #   >: 一行目
@@ -22,13 +24,13 @@
 [string]$subject        = $args[1]
 [string]$content        = $args[2]
 [string]$global:logPath
-if ($logPath -eq "") {
+if ($global:logPath -eq "") {
   if (Test-Path $logDir) {
     $logName = $MyName + "." + (get-date -UFormat "%Y%m%d.%H%M%S").toString() + "." + "log"
-    $logPath = Join-Path $logDir $logName
+    $global:logPath = Join-Path $logDir $logName
   } else {
     $logName = $MyName + "." + "log"
-    $logPath = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) $logName
+    $global:logPath = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) $logName
   }
 }
 ###############################################################################
@@ -76,6 +78,10 @@ function main {
     $EmailFrom = $userPass[0]
     $EmailTo = $destAddress
     $SMTPClient.Send($EmailFrom, $EmailTo, $subject, $body)
+
+    add2Log "TO:$EmailTo"
+    add2Log "SUBJECT:$subject"
+    add2Log "BODY:$body"
 
     add2Log "SUCCESS"
   } catch [Exception] {
