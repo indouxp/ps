@@ -50,7 +50,7 @@ function main {
 				"'" + $_.remark + "')"
 			} | Out-File -Append $sqlFile -Encoding Default
 		Add-Content -Path $sqlFile -Value "go" -Encoding String
-		sqlcmd -E -S $global:serverName -d $global:database -i $sqlFile -u -b -w 80 -W -o $sqlLogFile
+		sqlcmd -E -S $serverName -d $database -i $sqlFile -u -b -w 80 -W -o $sqlLogFile
 		if ($? -ne $true) {
 			throw "sqlcmd: FAIL"
 		}
