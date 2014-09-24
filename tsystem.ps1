@@ -1,2 +1,2 @@
-[string]$global:serverName = ".\sqlexpress"
-[string]$global:database = "tsystem"
+[string]$serverName = ".\sqlexpress"
+[string]$database = "tsystem"
