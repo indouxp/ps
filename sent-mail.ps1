@@ -18,12 +18,21 @@
 ###############################################################################
 [string]$script:MyPath = $MyInvocation.MyCommand.Path
 [string]$script:MyName = $MyInvocation.MyCommand.Name
-[string]$script:logDir = "D:\Data\Logs"
-[string]$script:cmnPath = "C:\Users\indou\utils\cmn010.ps1"
+[string]$hostname = hostname
+switch ($hostname) {
+  "cf-t9" {
+    [string]$script:logDir = "D:\Data\Logs"
+    [string]$script:cmnPath = "C:\Users\indou\utils\cmn010.ps1"
+  }
+  "vipi7920p6t" {
+    [string]$script:logDir = "C:\Users\indou\Documents"
+    [string]$script:cmnPath = "C:\Users\indou\Documents\GitHub\utils4ps\cmn010.ps1"
+  }
+}
 [string]$destAddress    = $args[0]
 [string]$subject        = $args[1]
 [string]$content        = $args[2]
-[string]$global:logPath
+[string]$global:logPath = ""
 if ($global:logPath -eq "") {
   if (Test-Path $logDir) {
     $logName = $MyName + "." + (get-date -UFormat "%Y%m%d.%H%M%S").toString() + "." + "log"
@@ -38,9 +47,9 @@ if ($global:logPath -eq "") {
 $ErrorActionPreference = "Stop"
 trap {
   $msg = "TRAP:" + $Error[0]
-	Write-Host $msg
+  Write-Host $msg
   add2Log $msg
-	break
+  break
 }
 ###############################################################################
 function main {
