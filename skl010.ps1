@@ -13,7 +13,7 @@ Param(
 $ErrorActionPreference = "Stop"
 trap {
   $msg = "trap:" + $Error[0]
-	Write-Host $msg
+  Write-Host $msg
   toLog $msg
 	break
 }
