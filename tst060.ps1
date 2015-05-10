@@ -24,8 +24,6 @@ function main {
 	$out = ""
 	$err = ""
 	while ($true) {
-		$proc.ProcessName
-		$proc.ExitCode
 		$out += $proc.StandardOutput.ReadtoEnd()
 		$err += $proc.StandardError.ReadtoEnd()
 		if ($proc.HasExited) {
@@ -52,6 +50,8 @@ function main {
 	#$err = $proc.StandardError.ReadtoEnd()
 	$out
 	$out.length
+	$err
+	$err.length
 
 	$pattern = $match_string
 	$result = $out | Select-String -Pattern $pattern
