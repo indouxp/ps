@@ -1,6 +1,5 @@
 
-$commands = 
-@(
+$commands = @(
   @{
     command = "sleep.exe";
     arguments = "3";
@@ -29,6 +28,7 @@ for ($i = 0; $i -lt $commands.length; $i++) {
   $proc[$i].StartInfo = $pinfo[$i]
   $proc[$i].Start() | Out-Null
 }
+
 for ($i = 0; $i -lt $commands.length; $i++) {
   ("wait " + $commands[$i].command + " " + $commands[$i].arguments)
   $proc[$i].WaitForExit()
