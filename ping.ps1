@@ -4,15 +4,16 @@ $bytes = 32
 
 function run_and_check {
 	Param($cmd, $opt, $match_string)
-	$proc_info = New-Object System.Diagnostics.ProcessStartInfo
-	$proc_info.FileName = $cmd
-	$proc_info.Arguments = $opt
-	$proc_info.RedirectStandardError = $true
-	$proc_info.RedirectStandardOutput = $true
-	$proc_info.UseShellExecute = $false
+
+	$proc_start_info = New-Object System.Diagnostics.ProcessStartInfo
+	$proc_start_info.FileName = $cmd
+	$proc_start_info.Arguments = $opt
+	$proc_start_info.RedirectStandardError = $true
+	$proc_start_info.RedirectStandardOutput = $true
+	$proc_start_info.UseShellExecute = $false
 
 	$proc = New-Object System.Diagnostics.Process
-	$proc.StartInfo = $proc_info
+	$proc.StartInfo = $proc_start_info
 	$proc.Start() | Out-Null
 	$out = ""
 	$err = ""
