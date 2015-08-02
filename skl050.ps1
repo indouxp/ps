@@ -14,7 +14,7 @@ function main {
     "START"
     $watch = New-Object System.Diagnostics.StopWatch
     $watch.Start()
-    Start-Sleep 2
+    Start-Sleep -m 2434
     $watch.Stop()
     $t = $watch.Elapsed
     [String]$t.Minutes + "•ª" + [String]$t.Seconds + "•b" + [String]$t.Milliseconds
