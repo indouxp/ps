@@ -1,7 +1,7 @@
 powershell -File C:\Users\indou\Documents\GitHub\ps\sleep-rand.ps1 -NoProfile
 powershell -File C:\Users\indou\Documents\GitHub\ps\sleep-rand.ps1 -NoProfile
 powershell -File C:\Users\indou\Documents\GitHub\ps\sleep-rand.ps1 -NoProfile
-.\no-multiple.bat 2
-.\no-multiple.bat 2
-.\no-multiple.bat 1
-.\no-multiple.bat 2
+..\samples\bat\no-multiple.bat 2
+..\samples\bat\no-multiple.bat 2
+..\samples\bat\no-multiple.bat 1
+..\samples\bat\no-multiple.bat 2
