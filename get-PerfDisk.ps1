@@ -3,14 +3,15 @@
 while ($true) {
 	$now = Get-Date -f "yyyyMMdd HHmmss"
 	$now
-  Get-WmiObject Win32_PerfFormattedData_PerfDisk_LogicalDisk |
+  Get-WmiObject Win32_PerfFormattedData_PerfDisk_LogicalDisk 	|
+		Where-Object {$_.Name -eq "C:"}														|
   	Select-Object 					`
   		Name,									`
 		  DiskReadBytesPersec,	`
 			PercentDiskReadTime,	`
 		  DiskWriteBytesPersec,	`
 			PercentDiskWriteTime
-  Start-Sleep 1
+  Start-Sleep 5
 	}
 
 # AvgDiskBytesPerRead
