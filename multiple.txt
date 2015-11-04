@@ -1,7 +1,46 @@
-powershell -File C:\Users\indou\Documents\GitHub\ps\sleep-rand.ps1 -NoProfile
-powershell -File C:\Users\indou\Documents\GitHub\ps\sleep-rand.ps1 -NoProfile
-powershell -File C:\Users\indou\Documents\GitHub\ps\sleep-rand.ps1 -NoProfile
-..\samples\bat\no-multiple.bat 2
-..\samples\bat\no-multiple.bat 2
-..\samples\bat\no-multiple.bat 1
-..\samples\bat\no-multiple.bat 2
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+#powershell -File C:\Users\indou\Documents\GitHub\ps\lock.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+powershell -File C:\Users\indou\Documents\GitHub\ps\mutex.ps1 -NoProfile
+
+#..\samples\bat\no-multiple.bat 2
+#..\samples\bat\no-multiple.bat 2
+#..\samples\bat\no-multiple.bat 1
+#..\samples\bat\no-multiple.bat 2
+
+#..\..\exclusive.exe
+#..\..\exclusive.exe
+#..\..\exclusive.exe
+#..\..\exclusive.exe

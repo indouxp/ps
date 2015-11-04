@@ -8,19 +8,23 @@ function main {
       foreach-object {
         $msg = $null
         $start = $null
-        $done = $null
+        $end = $null
         $start = select-string ":START" $_
         $fields = $start -split ":"
         [String]::Format('{0} {1} {2}', $fields[3], $fields[4], $fields[6])
-        $done = select-string ":END" $_
-        $fields = $done -split ":"
+        $end = select-string ":END" $_
+        $fields = $end -split ":"
         [String]::Format('{0} {1} {2}', $fields[3], $fields[4], $fields[6])
+        $done = select-string ":DONE" $_
 
         if ($_ -match "ABEND") {  # ABENDÇ™Ç†ÇÈèÍçá
           $msg += [String]::Format(' "exist ABEND"')
         }
         if ($start -eq $null) {   # STARTÇ™Ç»Ç¢èÍçá
           $msg += [String]::Format(' "no START"')
+        }
+        if ($done -eq $null) {    # DONEÇ™Ç»Ç¢èÍçá
+          $msg += [String]::Format(' "no DONE"')
         }
         if ($msg -ne $null) {
           $msg

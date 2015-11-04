@@ -23,25 +23,31 @@ function main {
 
     $mutex_name = [String]::Format('Global\{0}', $script.name)            # グローバルな名前
     $mutexObject = New-Object System.Threading.Mutex($false, $mutex_name) # mutex作成
-    while ($true) {
+    $timeout = 10
+    $count = 0
+    while ($count -lt $timeout) {
       if ($mutexObject.WaitOne(0, $false)) {
         break
       } 
       Start-Sleep 1
+      $count += 1
     }
     # 処理
     "START"                                                       | write-log
     $log_path                                                     | write-log
     $mutex_name                                                   | write-log
+    [String]::Format('wait {0}sec', $count)                       | write-log
 
 
     "END"                                                         | write-log
-    $mutexObject.ReleaseMutex() # mutex解放
-    $mutexObject.Close()        # mutexリソース解放
   } catch [Exception] {
     $error[0]                                                     | write-log
     "ABEND"                                                       | write-log
     exit 9
+  } finally {
+    $mutexObject.ReleaseMutex() # mutex解放
+    $mutexObject.Close()        # mutexリソース解放
+    "DONE"                                                        | write-log
   }
 }
 main
