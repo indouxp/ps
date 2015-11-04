@@ -4,9 +4,9 @@ set-variable -name script -value (get-item $MyInvocation.MyCommand.path) -option
 function main {
   try {
     [String]::Format('{0}:LastWriteTime:{1}', $script.name, $script.lastwritetime)
+    $msg = $null
     get-childitem "c:\users\indou\documents\log\mutex.ps1*log" |
       foreach-object {
-        $msg = $null
         $start = $null
         $end = $null
         $start = select-string ":START" $_
@@ -34,7 +34,6 @@ function main {
       }                                                       |
       sort-object                                             |
       foreach-object {
-        $msg = $null
         $_
         $fields = $_ -split " "
         if ($fields[2] -eq "END") {
@@ -50,6 +49,11 @@ function main {
         }
         $prev_fields = $fields
       }
+    if ($msg -eq $null) {
+      "NO ERROR"
+    } else {
+      $msg
+    }
 
   } catch [Exception] {
     $error[0]

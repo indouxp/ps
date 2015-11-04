@@ -21,23 +21,30 @@ function write-log {
 function main {
   try {
 
-    $mutex_name = [String]::Format('Global\{0}', $script.name)            # グローバルな名前
+    $mutex_name = [String]::Format('Global\{0}', $script.name)            # システム全体
+    # System.Threading.Mutex https://msdn.microsoft.com/ja-jp/library/system.threading.mutex(v=vs.110).aspx
     $mutexObject = New-Object System.Threading.Mutex($false, $mutex_name) # mutex作成
-    $timeout = 10
+    $timeout = 60*10
     $count = 0
     while ($count -lt $timeout) {
-      if ($mutexObject.WaitOne(0, $false)) {
+      # WaitOne https://msdn.microsoft.com/ja-jp/library/kzy257t0(v=vs.110).aspx
+      # 1:待機するミリ秒数。
+      # 2:待機する前にコンテキストの同期ドメインを終了し (同期されたコンテキスト内にいる場合)、
+      #   後で再取得する場合は、true。それ以外の場合は false。
+      if ($mutexObject.WaitOne(0, $false)) {  
         break
       } 
       Start-Sleep 1
       $count += 1
+    }
+    if ($count -eq $timeout) {
+      throw "TIMEOUT"
     }
     # 処理
     "START"                                                       | write-log
     $log_path                                                     | write-log
     $mutex_name                                                   | write-log
     [String]::Format('wait {0}sec', $count)                       | write-log
-
 
     "END"                                                         | write-log
   } catch [Exception] {
