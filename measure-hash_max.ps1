@@ -21,10 +21,10 @@ function run {
       $total = 0
       foreach ($key in $hash.keys) {
         $count += 1
-        $total += $hash[$key].length
+        $total += [System.Text.Encoding]::GetEncoding("Shift_Jis").GetByteCount($hash[$key])
       }
       $t = $watch.ElapsedMilliseconds
-      [String]::Format('ハッシュの個数:{0}, 文字数:{1} -- {2}ミリ秒', $count, $total, $t)
+      [String]::Format('ハッシュの個数:{0}, total byte数:{1} -- {2}ミリ秒', $count, $total, $t)
       $k = 0
     }
     $j += 1 # カウンター
